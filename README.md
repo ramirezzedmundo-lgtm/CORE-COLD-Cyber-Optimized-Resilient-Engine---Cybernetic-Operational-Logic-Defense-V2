@@ -29,3 +29,34 @@ Database: PostgreSQL (Auditoría Forense) + Redis (Cache de Tokens y Blacklists)
 Aislamiento de Cápsula: La IA opera en Pods inmutables de Kubernetes. Si una cápsula se compromete, K8s la destruye y reinicia una limpia en milisegundos.
 
 Persistencia del Aprendizaje: Los datos de la red neuronal y los logs contables residen en volúmenes lógicos independientes, garantizando que el conocimiento no se pierda tras la regeneración.# -CORE-COLD-Cyber-Optimized-Resilient-Engine---Cybernetic-Operational-Logic-Defense-Sistema de ciberseguridadc y adutoria financiera
+# 🛡️ CORE-COLD: Cyber-Optimized Resilient Engine
+> **"Inteligencia en Cápsulas, Ejecución en Hierro."**
+
+---
+
+## 🏛️ Arquitectura de Defensa Industrial (V2)
+CORE-COLD es un ecosistema híbrido diseñado para la protección de activos en entornos críticos (Retail, Manufactura y Logística). Operado desde el **Xbox Command Center**, el sistema despliega tres capas de seguridad autónoma:
+
+### 🛰️ Layer 3: The Bridge (Go)
+**Estatus:** `OPERATIVO` | **Función:** Orquestación de Nube.
+- Implementa **Rotación Dinámica de Tokens** (AES-256).
+- Sincronización asíncrona con Google Cloud/Drive para reportes de auditoría.
+
+### 🦀 Layer 2: The Auditor (Rust)
+**Estatus:** `OPERATIVO` | **Función:** Integridad de Memoria.
+- Validación de bloques de datos mediante Hash Integrity.
+- Garantiza que los registros de Oxxo/Maquila sean inmutables y libres de fugas.
+
+### 🛡️ Layer 1: The Gatekeeper (C++)
+**Estatus:** `OPERATIVO` | **Función:** Defensa de Perímetro.
+- Filtrado de paquetes de alta velocidad.
+- Mitigación de ataques de fuerza bruta (Hydra/Brute Force).
+
+---
+
+## 🚀 Despliegue (Docker)
+Para inicializar el motor en cualquier servidor industrial:
+
+```bash
+docker build -t core-cold-v2 .
+docker run -d --name sentinel core-cold-v2
