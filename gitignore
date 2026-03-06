@@ -1,0 +1,20 @@
+# --- CORE-COLD V2: REGLAS DE LIMPIEZA ---
+# Ignorar binarios compilados
+*.exe
+*.bin
+*.o
+*.out
+gatekeeper_bin
+
+# Ignorar archivos de sistema y basura de editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Ignorar caches de Python (IA Capsule)
+__pycache__/
+*.pyc
+
+# Ignorar nodos de Node.js (API Gateway)
+node_modules/
