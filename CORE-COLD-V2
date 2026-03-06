@@ -1,0 +1,15 @@
+CORE-COLD/
+├── .github/              # Workflows para despliegue automático (CI/CD)
+├── bin/                  # Binarios compilados (Ignorado por Git)
+├── docs/                 # Documentación técnica y manuales de Oxxo/Maquila
+├── src/                  # Código fuente organizado por Capas
+│   ├── api/              # Layer 4: Node.js / Express Gateway
+│   ├── auditor/          # Layer 2: Rust (Integridad de Memoria)
+│   ├── bridge/           # Layer 3: Go (Tokens de Google/Outlook)
+│   ├── capsule/          # Layer 5: Python (IA y Redes Neuronales)
+│   └── gatekeeper/       # Layer 1: C++ (Filtrado de Red)
+├── tests/                # Pruebas unitarias para asegurar que nada falle
+├── .gitignore            # Para mantener el repo limpio
+├── Dockerfile            # El contenedor universal
+├── LICENSE               # Tu sello de propiedad
+└── README.md             # El manifiesto del sistema
