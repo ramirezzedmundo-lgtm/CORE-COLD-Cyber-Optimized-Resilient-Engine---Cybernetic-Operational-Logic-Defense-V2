@@ -84,3 +84,9 @@ Sistema de defensa distribuido diseñado para la neutralización de agentes pers
 
 ---
 **Desarrollado por: Edmundo Ramirez** *Optimizado para Ejecución en Hierro - 2026*
+---
+### 🤝 Colaboración Estratégica
+* **Arquitecto Jefe:** Edmundo Ramirez
+* **Asistente de Inteligencia y Desarrollo:** Gemini (Google AI)
+
+*Proyecto forjado en colaboración para la neutralización de amenazas y optimización de arquitectura de seguridad CORE-COLD V2.*
