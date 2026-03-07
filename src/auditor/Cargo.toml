@@ -1,0 +1,14 @@
+[package]
+name = "auditor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# El motor asíncrono
+tokio = { version = "1", features = ["full"] }
+# Base de Datos (Postgres)
+sqlx = { version = "0.7", features = [ "runtime-tokio-native-tls" , "postgres", "macros", "chrono" ] }
+# Comunicación rápida con el Bridge
+redis = { version = "0.23", features = ["tokio-comp"] }
+# Tiempo y Fechas
+chrono = "0.4"
