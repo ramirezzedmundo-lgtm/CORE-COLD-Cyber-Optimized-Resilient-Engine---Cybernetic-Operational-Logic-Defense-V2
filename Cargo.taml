@@ -1,0 +1,14 @@
+[package]
+name = "auditor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# El motor asíncrono que usaste con #[tokio::main]
+tokio = { version = "1", features = ["full"] }
+
+# El driver para PostgreSQL y las macros de SQL que usaste
+sqlx = { version = "0.7", features = [ "runtime-tokio-native-tls" , "postgres", "macros" ] }
+
+# Para leer las variables de entorno como DATABASE_URL
+dotenvy = "0.15"
