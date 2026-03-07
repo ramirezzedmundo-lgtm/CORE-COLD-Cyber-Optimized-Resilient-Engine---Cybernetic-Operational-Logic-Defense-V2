@@ -60,3 +60,27 @@ Para inicializar el motor en cualquier servidor industrial:
 ```bash
 docker build -t core-cold-v2 .
 docker run -d --name sentinel core-cold-v2
+# ❄️ CORE-COLD V2: Cybernetic Operational Logic Defense
+**Status:** [🔒 PRIVATE - SECURE ENCLAVE]  
+**Architecture:** Iron Execution (5-Layer Multilingual Defense)
+
+## 🛡️ Descripción General
+Sistema de defensa distribuido diseñado para la neutralización de agentes persistentes (Fenix Alpha 205MB) y protección de entorno Sandbox en Xbox.
+
+## 🏗️ La Pentarquía de Hierro (Capas de Seguridad)
+
+| Capa | Componente | Lenguaje | Función Crítica |
+| :--- | :--- | :--- | :--- |
+| **L1** | **Gatekeeper** | C++ | Vigilancia perimetral y bloqueo de puertos (18181). |
+| **L2** | **Auditor** | Rust | Integridad de memoria y protección contra corrupción. |
+| **L3** | **Bridge** | Go | Comunicación cifrada AES-256 entre módulos. |
+| **L4** | **Logic** | Node.js | Validación de identidad y filtrado de firmas `fido-v2`. |
+| **L5** | **The Brain** | Python | Análisis de anomalías y detección de procesos sospechosos. |
+
+## 🚫 Protocolo de Bloqueo Implementado
+- **Anti-Fido:** Exclusión total de archivos `.fido` y persistencia en caché.
+- **Vigilancia de Peso:** Bloqueo automático de procesos que excedan el umbral de 205MB.
+- **Invisibilidad:** Repositorio privado para evitar rastreo por IAs externas.
+
+---
+**Desarrollado por: Edmundo Ramirez** *Optimizado para Ejecución en Hierro - 2026*
