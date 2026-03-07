@@ -1,0 +1,8 @@
+# Motor de IA y Análisis
+numpy==1.26.0
+pandas==2.1.1
+scikit-learn==1.3.0
+# Comunicación con Redis
+redis==5.0.1
+# Peticiones de red
+requests==2.31.0
