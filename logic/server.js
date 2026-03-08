@@ -16,7 +16,7 @@ function validateSession(token) {
         console.error("[🚨] ALERTA: Intento de secuestro por Fido-V2 detectado.");
         return "DENIED_BY_CORE_COLD";
     }
-
+'
     console.log(`[✅] ACCESO CONCEDIDO A: ${identity}`);
     return "ACCESS_GRANTED";
 }
