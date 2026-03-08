@@ -1,0 +1,9 @@
+cyber-sentinel/
+├── src/
+│   ├── gateway/            # (Node.js/Express) - Entrada y Auth con JWT
+│   ├── monitor/            # (Go) - Fase 1: Escaneo y Monitoreo de Red
+│   ├── vault/              # (Rust) - Fase 2: Cifrado y gestión de Tokens Rotativos
+│   ├── brain/              # (Python) - Fase 3: Redes Neuronales y Análisis de IA
+│   └── shared/             # Definiciones comunes (Protobuf o tipos de datos)
+├── docker-compose.yml      # El orquestador (fuera de src)
+└── .env                    # Variables críticas (fuera de src)
