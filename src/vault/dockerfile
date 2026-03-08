@@ -1,0 +1,17 @@
+# Usamos una imagen oficial de Rust
+FROM rust:1.75-slim
+
+# Creamos el directorio de trabajo
+WORKDIR /usr/src/vault
+
+# Copiamos los archivos de configuración de Cargo
+COPY Cargo.toml ./
+
+# Copiamos el código fuente
+COPY src ./src
+
+# Compilamos para producción (Optimización Cold-Engine)
+RUN cargo build --release
+
+# Comando para ejecutar la bóveda
+CMD ["./target/release/vault"]
