@@ -1,51 +1,50 @@
 version: '3.8'
 
 services:
-  # El núcleo de tu sistema (Fase 1, 2 y 3)
-  core-cold-app:
+  # L3: THE BRIDGE (Go) - Orquestación de Tokens
+  bridge:
     build: 
       context: .
       dockerfile: Dockerfile
-    container_name: core_cold_engine
+    container_name: core-cold-bridge
+    networks:
+      - cold-net
     restart: always
-    environment:
-      - DATABASE_URL=postgres://tella_admin:password123@db_postgres:5432/core_cold_db
-      - REDIS_URL=redis://cache_redis:6379
-      - JWT_SECRET=${JWT_SECRET} # Cargado desde tu .env
-    ports:
-      - "3000:3000"   # API Logic (Node.js)
-      - "50051:50051" # Bridge (Go/gRPC)
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25' # Control de CPU Frío
+          memory: 64M
+
+  # L2: THE AUDITOR (Rust) - Integridad Contable
+  auditor:
+    build:
+      context: .
+      dockerfile: Dockerfile.rust
+    container_name: core-cold-auditor
     depends_on:
-      - db_postgres
-      - cache_redis
+      - bridge
     networks:
-      - cold_network
+      - cold-net
+    restart: always
 
-  # Fase 1 & 2: Almacenamiento de auditoría (PostgreSQL)
-  db_postgres:
-    image: postgres:15-alpine
-    container_name: core_cold_db
+  # L4: THE LOGIC (Node.js) - Gateway de Comando
+  logic:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: core-cold-logic
+    ports:
+      - "18181:18181" # Puerto de control industrial
+    depends_on:
+      - auditor
+    networks:
+      - cold-net
     environment:
-      - POSTGRES_USER=tella_admin
-      - POSTGRES_PASSWORD=password123
-      - POSTGRES_DB=core_cold_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql # Tu esquema inicial
-    networks:
-      - cold_network
-
-  # Fase 2: Caché para Tokens Rotativos (Redis)
-  cache_redis:
-    image: redis:7-alpine
-    container_name: core_cold_redis
-    command: ["redis-server", "--appendonly", "yes"]
-    networks:
-      - cold_network
+      - NODE_ENV=production
+      - AUTH_SECRET=${AUTH_SECRET} # Variable desde archivo .env
 
 networks:
-  cold_network:
+  cold-net:
     driver: bridge
-
-volumes:
-  postgres_data:
+    name: core-cold-v2-isolated
