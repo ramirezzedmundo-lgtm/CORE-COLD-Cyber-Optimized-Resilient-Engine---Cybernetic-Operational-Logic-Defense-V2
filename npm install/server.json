@@ -1,0 +1,12 @@
+// Añade esta ruta a tu server.js para recibir el Token del Bridge
+app.post('/internal/update-token', (req, res) => {
+    const { newToken, sessionID } = req.body;
+    
+    // Aquí recibimos la rotación que programamos en Go
+    console.log(`❄️ [SYNC] Token recibido del Bridge: ${sessionID}`);
+    
+    // Guardamos el token en memoria volátil (CPU Frío/Seguridad)
+    global.currentActiveToken = newToken; 
+    
+    res.sendStatus(200);
+});
