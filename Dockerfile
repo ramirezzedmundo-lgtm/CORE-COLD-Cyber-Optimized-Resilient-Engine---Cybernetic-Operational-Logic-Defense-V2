@@ -1,27 +1,32 @@
-# 1. IMAGEN BASE: Linux ligero y estable para entorno industrial
-FROM python:3.11-slim-bookworm
+# ETAPA 1: El Taller (Compilación)
+FROM golang:1.21-alpine AS builder
 
-# 2. METADATOS: Sello de Propiedad de Edmundo Ramírez
-LABEL maintainer="Edmundo Ramirez"
-LABEL project="CORE-COLD-V2-INDUSTRIAL"
+# Configuración de entorno para ejecución en "Hierro" (Estructura estática)
+ENV CGO_ENABLED=0 GOOS=linux
 
-# 3. HERRAMIENTAS DE HIERRO: Instalamos compiladores de C++ y dependencias de red
-RUN apt-get update && apt-get install -y \
-    g++ \
-    gcc \
-    libc6-dev \
-    make \
-    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
 
-# 4. ENTORNO DE TRABAJO
-WORKDIR /usr/src/core_cold
+# Copiar archivos de dependencias
+COPY go.mod ./
+# Si tienes dependencias, descomenta la siguiente línea:
+# RUN go mod download
 
-# 5. INYECCIÓN DE CÓDIGO: Pasamos todo el arsenal al contenedor
-COPY . .
+# Copiar el código fuente que acabamos de refinar
+COPY main.go .
 
-# 6. FORJA DEL GATEKEEPER: Compilamos el centinela C++
-RUN g++ src/gatekeeper/gatekeeper.cpp -o gatekeeper_bin
+# Compilar un binario estático y optimizado
+RUN go build -ldflags="-s -w" -o bridge main.go
 
-# 7. EJECUCIÓN: Iniciamos la Capa 1 por defecto
-# CORE-COLD arranca protegiendo el perímetro
-CMD ["./gatekeeper_bin"]
+# ETAPA 2: La Cápsula (Ejecución Ligera)
+FROM scratch
+
+WORKDIR /
+
+# Copiar solo el binario desde el "Taller"
+COPY --from=builder /app/bridge /bridge
+
+# Exponer el puerto del Bridge para comunicación interna (L3)
+EXPOSE 18181
+
+# Ejecutar el centinela
+ENTRYPOINT ["/bridge"]
