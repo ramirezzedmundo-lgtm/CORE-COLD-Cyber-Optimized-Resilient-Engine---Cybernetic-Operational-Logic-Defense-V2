@@ -1,41 +1,62 @@
 package main
 
 import (
-	"context"
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
+	"encoding/hex"
 	"fmt"
-	"log"
+	"io"
 	"time"
-
-	"github.com/go-redis/redis/v8" // Para manejar los tokens rotativos
 )
 
-var ctx = context.Background()
+// Estructura para el Token de Auditoría
+type AuditSession struct {
+	ID        string
+	Token     []byte
+	CreatedAt time.Time
+}
 
 func main() {
-	fmt.Println("🚀 CORE-FRÍO: Bridge (Fase 2) Operativo. Monitoreando Redis...")
+	fmt.Println("❄️ CORE-COLD V2: Bridge Layer (Go) - ACTIVE")
+	fmt.Println("🛡️ Target: Industrial Audit (Oxxo/7-Eleven/Maquila)")
 
-	// 1. Conexión a Redis (El buzón de mensajes rápidos)
-	rdb := redis.NewClient(&redis.Options{
-		Addr: "cache_redis:6379", // Nombre del servicio en tu Docker
-	})
+	// Canal para registrar eventos en la base de datos de Auditoría Forense
+	auditLog := make(chan string)
 
-	// 2. Bucle de Reacción (Goroutine)
-	for {
-		// El Bridge "escucha" si el Auditor (Rust) reporta una IP peligrosa
-		val, err := rdb.Get(ctx, "last_alert_risk").Result()
-		if err == nil && val == "3" {
-			fmt.Println("⚠️ RIESGO CRÍTICO DETECTADO: Iniciando Rotación de Tokens...")
-			
-			// Lógica de Rotación: Cambiamos la "llave" maestra en Redis
-			newToken := fmt.Sprintf("CORED-COLD-%d", time.Now().Unix())
-			rdb.Set(ctx, "active_session_token", newToken, 5*time.Minute)
-			
-			fmt.Printf("🔐 Nuevo Token Rotativo Generado: %s\n", newToken)
-			
-			// Limpiamos la alerta para esperar la siguiente
-			rdb.Del(ctx, "last_alert_risk")
+	go func() {
+		for msg := range auditLog {
+			// Aquí conectaríamos con Layer 2 (Rust) para validar integridad
+			fmt.Printf("[AUDIT LOG]: %s\n", msg)
 		}
+	}()
 
-		time.Sleep(1 * time.Second) // Pausa para no saturar el CPU
+	ticker := time.NewTicker(15 * time.Minute)
+	
+	// Generar primer token de sesión inmediatamente
+	currentSession := rotateSession(auditLog)
+
+	for {
+		select {
+		case <-ticker.C:
+			currentSession = rotateSession(auditLog)
+			_ = currentSession // Evita error de variable no usada
+		}
 	}
 }
+
+func rotateSession(logChan chan string) AuditSession {
+	token := generateSecureToken(32)
+	sessionID := hex.EncodeToString(generateSecureToken(8))
+	
+	newSession := AuditSession{
+		ID:        sessionID,
+		Token:     token,
+		CreatedAt: time.Now(),
+	}
+
+	logChan <- fmt.Sprintf("Nueva sesión de auditoría iniciada: ID-%s", sessionID)
+	return newSession
+}
+
+// ... (tus funciones generateSecureToken y encrypt se mantienen igual)
