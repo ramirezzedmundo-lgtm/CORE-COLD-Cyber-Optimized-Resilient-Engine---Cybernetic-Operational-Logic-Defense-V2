@@ -1,0 +1,12 @@
+# L4: The Logic (Node.js)
+  logic:
+    build:
+      context: ./logic  # <-- Asegúrate de que apunte a la nueva carpeta
+      dockerfile: Dockerfile.node
+    container_name: core-cold-logic
+    ports:
+      - "18181:18181"
+    networks:
+      - cold-net
+    depends_on:
+      - auditor
